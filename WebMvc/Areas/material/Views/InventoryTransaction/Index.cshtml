@@ -1,0 +1,370 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<div id="listForm" class="layui-tab-item layui-show">
+    <div id="ImportData" style="padding: 60px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;display: none;">
+        <div style="overflow:hidden">
+            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" data-type="btnTemplate"><i class="layui-icon">&#xe663;</i>生成模板</a>
+            <br />
+            <br />
+            <input type="file" name="excelfile" id="excelfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+        <div class="layui-form-item" id="panelSearch" hidden>
+            <fieldset class="layui-elem-field">
+                <legend>检索区域 - 请输入相关数据查询</legend>
+                <div class="layui-field-box" id="qform">
+                    <div class="layui-form-item layui-col-sm12">
+                        <div class="layui-inline toolList">
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius" data-type="btnQuery"><i class="layui-icon">&#xe615;</i>查询</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" data-type="btnReset"><i class="layui-icon">&#xe66c;</i>重置</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" data-type="btnClose"><i class="layui-icon">&#xe6a7;</i>关闭</a>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">id</label>
+                            <div class="layui-input-inline">
+                                <input name="qId" v-model="Id" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">FactoryId</label>
+                            <div class="layui-input-inline">
+                                <input name="qFactoryId" v-model="FactoryId" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">FactoryCode</label>
+                            <div class="layui-input-inline">
+                                <input name="qFactoryCode" v-model="FactoryCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">LineId</label>
+                            <div class="layui-input-inline">
+                                <input name="qLineId" v-model="LineId" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">LineCode</label>
+                            <div class="layui-input-inline">
+                                <input name="qLineCode" v-model="LineCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">仓库类型</label>
+                            <div class="layui-input-inline">
+                                <input name="qWarehouseCode" v-model="WarehouseCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">库位id</label>
+                            <div class="layui-input-inline">
+                                <input name="qLocationId" v-model="LocationId" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">库位编号</label>
+                            <div class="layui-input-inline">
+                                <input name="qLocationCode" v-model="LocationCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">容器编码</label>
+                            <div class="layui-input-inline">
+                                <input name="qContainerCode" v-model="ContainerCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">上游系统单号</label>
+                            <div class="layui-input-inline">
+                                <input name="qSourceCode" v-model="SourceCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">上游系统行号</label>
+                            <div class="layui-input-inline">
+                                <input name="qSourceLine" v-model="SourceLine" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">交易类型</label>
+                            <div class="layui-input-inline">
+                                <input name="qType" v-model="Type" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">物料Id</label>
+                            <div class="layui-input-inline">
+                                <input name="qMaterialId" v-model="MaterialId" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">物料名称</label>
+                            <div class="layui-input-inline">
+                                <input name="qMaterialName" v-model="MaterialName" type="text" autocomplete="off" lay-verify="required" maxlength="500" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">物料编码</label>
+                            <div class="layui-input-inline">
+                                <input name="qMaterialCode" v-model="MaterialCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">批次</label>
+                            <div class="layui-input-inline">
+                                <input name="qBatch" v-model="Batch" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">批号</label>
+                            <div class="layui-input-inline">
+                                <input name="qLot" v-model="Lot" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">项目号</label>
+                            <div class="layui-input-inline">
+                                <input name="qDrawingCode" v-model="DrawingCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">生产日期</label>
+                            <div class="layui-input-inline">
+                                <input name="qManufactureDate" v-model="ManufactureDate" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">失效日期</label>
+                            <div class="layui-input-inline">
+                                <input name="qExpirationDate" v-model="ExpirationDate" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">库存状态</label>
+                            <div class="layui-input-inline">
+                                <input name="qStatus" v-model="Status" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">数量</label>
+                            <div class="layui-input-inline">
+                                <input name="qQty" v-model="Qty" type="text" autocomplete="off" lay-verify="required" maxlength="13" class="layui-input NumDecText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateTime" v-model="CreateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">创建用户</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateBy" v-model="CreateBy" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateTime" v-model="UpdateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新用户</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateBy" v-model="UpdateBy" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <table id="mainList" lay-filter="mainList"></table>
+
+        <script type="text/html" id="toolbarTable">
+            <div class="layui-btn-container">
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnSelect"><i class="layui-icon">&#xe628;</i>检索</a>
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnRefresh"><i class="layui-icon">&#xe9aa;</i>刷新</a>
+                {{ loadMenus("InventoryTransaction", 1) }}
+            </div>
+        </script>
+    </form>
+</div>
+
+<div id="modifyForm" class="layui-tab-item">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyForm">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">FactoryId</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="FactoryId" v-model="FactoryId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">FactoryCode</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="FactoryCode" v-model="FactoryCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">LineId</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LineId" v-model="LineId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">LineCode</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LineCode" v-model="LineCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">仓库类型</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="WarehouseCode" v-model="WarehouseCode" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">库位id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LocationId" v-model="LocationId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">库位编号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LocationCode" v-model="LocationCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">容器编码</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ContainerCode" v-model="ContainerCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">上游系统单号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="SourceCode" v-model="SourceCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">上游系统行号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="SourceLine" v-model="SourceLine" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">交易类型</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Type" v-model="Type" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">物料Id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="MaterialId" v-model="MaterialId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">物料名称</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="MaterialName" v-model="MaterialName" type="text" autocomplete="off" lay-verify="" maxlength="500" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">物料编码</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="MaterialCode" v-model="MaterialCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">批次</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Batch" v-model="Batch" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">批号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Lot" v-model="Lot" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">项目号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="DrawingCode" v-model="DrawingCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">生产日期</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ManufactureDate" v-model="ManufactureDate" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">失效日期</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ExpirationDate" v-model="ExpirationDate" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">库存状态</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Status" v-model="Status" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">数量</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Qty" v-model="Qty" type="text" autocomplete="off" lay-verify="" maxlength="13" class="layui-input NumDecText">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/material/InventoryTransaction.js?v=2019.11.11"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2019.11.11"></script>

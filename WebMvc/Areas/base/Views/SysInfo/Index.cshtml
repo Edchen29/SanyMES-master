@@ -1,0 +1,221 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<div id="listForm" class="layui-tab-item layui-show">
+    <div id="ImportData" style="padding: 60px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;display: none;">
+        <div style="overflow:hidden">
+            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" data-type="btnTemplate"><i class="layui-icon">&#xe663;</i>生成模板</a>
+            <br />
+            <br />
+            <input type="file" name="excelfile" id="excelfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+        <div class="layui-form-item" id="panelSearch" hidden>
+            <fieldset class="layui-elem-field">
+                <legend>检索区域 - 请输入相关数据查询</legend>
+                <div class="layui-field-box" id="qform">
+                    <div class="layui-form-item layui-col-sm12">
+                        <div class="layui-inline toolList">
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius" data-type="btnQuery"><i class="layui-icon">&#xe615;</i>查询</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" data-type="btnReset"><i class="layui-icon">&#xe66c;</i>重置</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" data-type="btnClose"><i class="layui-icon">&#xe6a7;</i>关闭</a>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">id</label>
+                            <div class="layui-input-inline">
+                                <input name="qId" v-model="Id" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">系统关键字</label>
+                            <div class="layui-input-inline">
+                                <input name="qAppKey" v-model="AppKey" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">系统密钥</label>
+                            <div class="layui-input-inline">
+                                <input name="qAppSecret" v-model="AppSecret" type="text" autocomplete="off" lay-verify="required" maxlength="100" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">标题</label>
+                            <div class="layui-input-inline">
+                                <input name="qTitle" v-model="Title" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-inline">
+                                <input name="qRemark" v-model="Remark" type="text" autocomplete="off" lay-verify="required" maxlength="250" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">图标</label>
+                            <div class="layui-input-inline">
+                                <input name="qIcon" v-model="Icon" type="text" autocomplete="off" lay-verify="required" maxlength="100" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">主页</label>
+                            <div class="layui-input-inline">
+                                <input name="qReturnUrl" v-model="ReturnUrl" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">生效</label>
+                            <div class="layui-input-inline">
+                                <input name="qIsEnable" v-model="IsEnable" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateTime" v-model="CreateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">创建用户</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateBy" v-model="CreateBy" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateTime" v-model="UpdateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新用户</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateBy" v-model="UpdateBy" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    
+        <table id="mainList" class="layui-table"
+                lay-data="{height: 'full-1', cellMinWidth: 80, page:true, id:'mainList', limit: 20, limits: [20, 50, 100, 200, 500, 1000], defaultToolbar: ['filter'], toolbar: '#toolbarTable'}"
+                lay-filter="mainList" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Id', width:80, sort: true, fixed: false, hide: false}">id</th>
+                    <th lay-data="{field:'AppKey', width:150, sort: true, fixed: false, hide: false}">系统关键字</th>
+                    <th lay-data="{field:'AppSecret', width:150, sort: true, fixed: false, hide: false}">系统密钥</th>
+                    <th lay-data="{field:'Title', width:150, sort: true, fixed: false, hide: false}">标题</th>
+                    <th lay-data="{field:'Remark', width:150, sort: true, fixed: false, hide: false}">备注</th>
+                    <th lay-data="{field:'Icon', width:150, sort: true, fixed: false, hide: false}">图标</th>
+                    <th lay-data="{field:'ReturnUrl', width:150, sort: true, fixed: false, hide: false}">主页</th>
+                    <th lay-data="{field:'IsEnable', width:150, sort: true, fixed: false, hide: false}">生效</th>
+                    <th lay-data="{field:'CreateTime', width:150, sort: true, fixed: false, hide: false}">创建时间</th>
+                    <th lay-data="{field:'CreateBy', width:150, sort: true, fixed: false, hide: false}">创建用户</th>
+                    <th lay-data="{field:'UpdateTime', width:150, sort: true, fixed: false, hide: false}">更新时间</th>
+                    <th lay-data="{field:'UpdateBy', width:150, sort: true, fixed: false, hide: false}">更新用户</th>
+                </tr>
+            </thead>
+        </table>
+        <script type="text/html" id="toolbarTable">
+            <div class="layui-btn-container">
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="btnSelect"><i class="layui-icon">&#xe628;</i>检索</a>
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" lay-event="btnRefresh"><i class="layui-icon">&#xe9aa;</i>刷新</a>
+                {{ loadMenus("SysInfo", 1) }}
+            </div>
+        </script>
+    </form>
+</div>
+
+<div id="modifyForm" class="layui-tab-item">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyForm">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">系统关键字</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="AppKey" v-model="AppKey" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">系统密钥</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="AppSecret" v-model="AppSecret" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">标题</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Title" v-model="Title" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">备注</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Remark" v-model="Remark" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">图标</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Icon" v-model="Icon" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">主页</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ReturnUrl" v-model="ReturnUrl" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">生效</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="IsEnable" v-model="IsEnable" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/base/SysInfo.js?v=2019.08.26"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2019.08.26"></script>

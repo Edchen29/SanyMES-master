@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+    {
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+    <div class="layui-form-item" id="panelSearch">
+
+        <div class="layui-field-box" id="qform">
+            <div class="layui-row">
+                <div class="layui-col-sm3">
+                    <label class="layui-form-label">报表名称</label>
+                    <div class="layui-input-inline" style="width:280px">
+                        <select id="ReportId" name="ReportId" lay-filter="ReportId"></select>
+                    </div>
+                </div>
+                <div class="layui-btn-container">
+                    <a herf="javascript:;" class="layui-btn" data-type="btnQueryData">查询</a>
+                    <a herf="javascript:;" class="layui-btn layui-btn-mini" data-type="btnExportData">导出</a>
+                </div>
+            </div>
+            <div class="layui-col-sm4">
+                <label class="layui-form-label">查询条件</label>
+                <div class="layui-input-inline">
+                    <input id="Filter" name="Filter" type="text" autocomplete="off" class="layui-input" style="width:530px" readonly="readonly">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="tableContainer">
+    </div>
+</form>
+
+<div id="DivConfigParams" hidden>
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-card">
+            <div class="layui-row" id="ConfigParams">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/report/ExcelReport.js?v=2019.08.01"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2019.07.15"></script>

@@ -1,0 +1,112 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+    {
+    <link rel="stylesheet" href="/css/treetable.css" />
+    <link href="/js/flow/GooFlow.css" rel="stylesheet" />
+    <link href="/css/formpreview.css" rel="stylesheet" />
+}
+    <form class="layui-form layui-form-pane" action="" id="formEdit">
+        <input type="hidden" name="Id" v-model="Id" />
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="tab" style="margin: 0px">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">工序流程基本信息</li>
+                    <li>流程可视设计</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工艺编号</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="SchemeCode" v-model="SchemeCode" required lay-verify="required"
+                                       placeholder="工序代号" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工艺名称</label>
+                            <div class="layui-input-inline">
+                                <input name="SchemeName" v-model="SchemeName" type="text" autocomplete="off" lay-verify="" maxlength="200" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">工艺分类</label>
+                            <div class="layui-input-inline">
+                                <input name="SchemeType" v-model="SchemeType" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">产品</label>
+                            <div class="layui-input-inline">
+                                <input name="ProductId" v-model="ProductId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">机型</label>
+                            <div class="layui-input-inline">
+                                <input name="MachineType" v-model="MachineType" type="text" autocomplete="off" lay-verify="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" pane>
+                            <label class="layui-form-label">是否禁用</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" value="1" v-model="Disabled" name="Disabled" lay-skin="switch"
+                                       lay-text="是|否">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" pane>
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea name="Description" v-model="Description" placeholder="请输入"
+                                          class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <div id="flowPanel" style=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" lay-submit id="btnSubmit" lay-filter="formSubmit" />
+    </form>
+
+
+    <div id="nodeForm" class="layui-tab-item">
+        <form class="layui-form layui-form-pane" action="" lay-filter="nodeForm">
+            <div class="layui-row">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">基本信息</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流程代号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="NodeCode" id="NodeCode" v-model="NodeCode" required lay-verify="required"
+                                           placeholder="流程代号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流程名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="NodeName" v-model="NodeName" required lay-verify="required"
+                                           placeholder="流程名称" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">流程排序</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="SortCode" v-model="SortCode" required lay-verify="required"
+                                           placeholder="流程排序" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/base/flowSchemeDesign.js"></script>

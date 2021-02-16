@@ -1,0 +1,442 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+    {
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<div id="listForm" class="layui-tab-item layui-show">
+    <div id="ImportData" style="padding: 60px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;display: none;">
+        <div style="overflow:hidden">
+            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" data-type="btnTemplate"><i class="layui-icon">&#xe663;</i>生成模板</a>
+            <br />
+            <br />
+            <input type="file" name="excelfile" id="excelfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+        <div class="layui-form-item" id="panelSearch" hidden>
+            <fieldset class="layui-elem-field">
+                <legend>检索区域 - 请输入相关数据查询</legend>
+                <div class="layui-field-box" id="qform">
+                    <div class="layui-form-item layui-col-sm12">
+                        <div class="layui-inline toolList">
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius" data-type="btnQuery"><i class="layui-icon">&#xe615;</i>查询</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" data-type="btnReset"><i class="layui-icon">&#xe66c;</i>重置</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" data-type="btnClose"><i class="layui-icon">&#xe6a7;</i>关闭</a>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">Id</label>
+                            <div class="layui-input-inline">
+                                <input name="qId" v-model="Id" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">工单号</label>
+                            <div class="layui-input-inline">
+                                <input name="qCode" v-model="Code" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">产品</label>
+                            <div class="layui-input-inline">
+                                <input name="qProductCode" v-model="ProductCode" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">部件料号</label>
+                            <div class="layui-input-inline">
+                                <input name="qPartMaterialCode" v-model="PartMaterialCode" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">计划量</label>
+                            <div class="layui-input-inline">
+                                <input name="qPlanQty" v-model="PlanQty" type="text" autocomplete="off" lay-verify="required" maxlength="19" class="layui-input NumDecText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">完成量</label>
+                            <div class="layui-input-inline">
+                                <input name="qCompleteQty" v-model="CompleteQty" type="text" autocomplete="off" lay-verify="required" maxlength="19" class="layui-input NumDecText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">不良量</label>
+                            <div class="layui-input-inline">
+                                <input name="qNGQty" v-model="NGQty" type="text" autocomplete="off" lay-verify="required" maxlength="19" class="layui-input NumDecText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">工单状态</label>
+                            <div class="layui-input-inline">
+                                <select name="qStatus" v-model="Status" data-model="Status" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">工单类型</label>
+                            <div class="layui-input-inline">
+                                <select name="qType" v-model="Type" data-model="Type" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">线体</label>
+                            <div class="layui-input-inline">
+                                <select name="qLineId" v-model="LineId" data-model="LineId" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">批次号</label>
+                            <div class="layui-input-inline">
+                                <input name="qLotNo" v-model="LotNo" type="text" autocomplete="off" lay-verify="required" maxlength="30" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">优先级</label>
+                            <div class="layui-input-inline">
+                                <select name="qPriority" v-model="Priority" data-model="Priority" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">计划开始时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qPlanStartTime" v-model="PlanStartTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">预计完成时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qPlanEndTime" v-model="PlanEndTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">实际开始时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qActualStartTime" v-model="ActualStartTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">实际结束时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qActualEndTime" v-model="ActualEndTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">预留号</label>
+                            <div class="layui-input-inline">
+                                <input name="qReserveNo" v-model="ReserveNo" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">预留行号</label>
+                            <div class="layui-input-inline">
+                                <input name="qReserveRowNo" v-model="ReserveRowNo" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">生产工厂</label>
+                            <div class="layui-input-inline">
+                                <input name="qWorkFactory" v-model="WorkFactory" type="text" autocomplete="off" lay-verify="required" maxlength="16" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">建立时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateTime" v-model="CreateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">建立者</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateBy" v-model="CreateBy" type="text" autocomplete="off" lay-verify="required" maxlength="16" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateTime" v-model="UpdateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新者</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateBy" v-model="UpdateBy" type="text" autocomplete="off" lay-verify="required" maxlength="16" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <table id="mainList" lay-filter="mainList"></table>
+        <script type="text/html" id="ShowDtlCode">
+            <a href='javascript:;' class='layui-table-link '><u class="OrderDetiailHistoryClass" style='color: cornflowerblue'>{{d.Code}}</u></a>
+        </script>
+        <script type="text/html" id="toolbarTable">
+            <div class="layui-btn-container">
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnSelect"><i class="layui-icon">&#xe628;</i>检索</a>
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnRefresh"><i class="layui-icon">&#xe9aa;</i>刷新</a>
+                {{ loadMenus("OrderHeaderHistory", 1) }}
+            </div>
+        </script>
+        <div class="layui-collapse" lay-filter="DisplayDtl">
+            <div class="layui-colla-item" style="display:none" id="DisplayDtlOrderDetiailHistory">
+                <h2 class="layui-colla-title" id="title_OrderDetiailHistory">工单明细</h2>
+                <div class="layui-colla-content">
+                    <table id="mainListDtlOrderDetiailHistory" lay-filter="mainListDtlOrderDetiailHistory" lay-size="sm"></table>
+                    <script type="text/html" id="toolbarTableOrderDetiailHistory">
+                        <div class="layui-btn-container">
+                            {{ loadMenus("OrderHeaderHistory",2) }}
+                        </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modifyForm" class="layui-tab-item">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyForm">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">Id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">工单号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Code" v-model="Code" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">产品</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ProductCode" v-model="ProductCode" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">部件料号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="PartMaterialCode" v-model="PartMaterialCode" type="text" autocomplete="off" lay-verify="" maxlength="50" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">计划量</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="PlanQty" v-model="PlanQty" type="text" autocomplete="off" lay-verify="" maxlength="19" class="layui-input NumDecText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">完成量</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CompleteQty" v-model="CompleteQty" type="text" autocomplete="off" lay-verify="" maxlength="19" class="layui-input NumDecText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">不良量</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="NGQty" v-model="NGQty" type="text" autocomplete="off" lay-verify="" maxlength="19" class="layui-input NumDecText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">工单状态</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="Status" v-model="Status" data-model="Status" class="Selector_OrderHeaderHistory ClearSelector_OrderHeaderHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">工单类型</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="Type" v-model="Type" data-model="Type" class="Selector_OrderHeaderHistory ClearSelector_OrderHeaderHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">线体</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="LineId" v-model="LineId" data-model="LineId" class="Selector_OrderHeaderHistory ClearSelector_OrderHeaderHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">批次号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LotNo" v-model="LotNo" type="text" autocomplete="off" lay-verify="" maxlength="30" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">优先级</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="Priority" v-model="Priority" data-model="Priority" class="Selector_OrderHeaderHistory ClearSelector_OrderHeaderHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">计划开始时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="PlanStartTime" v-model="PlanStartTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">预计完成时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="PlanEndTime" v-model="PlanEndTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">实际开始时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ActualStartTime" v-model="ActualStartTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">实际结束时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ActualEndTime" v-model="ActualEndTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">预留号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ReserveNo" v-model="ReserveNo" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">预留行号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ReserveRowNo" v-model="ReserveRowNo" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">生产工厂</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="WorkFactory" v-model="WorkFactory" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">建立时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">建立者</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新者</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modifyFormDtl_OrderDetiailHistory" class="layui-tab-item">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyFormDtl_OrderDetiailHistory">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">Id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">工单号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="OrderCode" v-model="OrderCode" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">关联头表</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="OrderHeaderId" v-model="OrderHeaderId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">产品图号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="DrawingNumber" v-model="DrawingNumber" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">序列号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="SerialNumber" v-model="SerialNumber" type="text" autocomplete="off" lay-verify="" maxlength="64" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">执行状态</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="ExecuteStatus" v-model="ExecuteStatus" data-model="ExecuteStatus" class="Selector ClearSelector_OrderDetiailHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">质量状态</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="QualityStatus" v-model="QualityStatus" data-model="QualityStatus" class="Selector ClearSelector_OrderDetiailHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">跟踪工位</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="StationTraceId" v-model="StationTraceId" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">开始时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="StartTime" v-model="StartTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">结束时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="EndTime" v-model="EndTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">建立时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">建立者</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新者</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/wo/OrderHeaderHistory.js?v=2020.03.19"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2020.03.19"></script>

@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- #section:basics/content.breadcrumbs -->
+
+<div class="layui-btn-container" style="padding-left:5px" id="RoadWays">
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget-box widget-color-blue">
+                <style>
+                    body {
+                        background: white;
+                    }
+
+                    #LocationMap, #PointMap, #ContainersInfo, #CarInfo {
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                        margin: 0px;
+                        /*border: thin solid #aaaaaa;*/
+                    }
+
+                    .father {
+                        width: 1050px;
+                        height: 1050px;
+                        position: relative;
+                        /*background-color:red;*/
+                    }
+
+                    .son {
+                        width: 1250px;
+                        height: 950px;
+                        position: absolute;
+                        margin-top: 0px;
+                        margin-left: 50px;
+                        /*background-color:green;*/
+                    }
+                </style>
+
+                <div class="widget-body gridwidth">
+                    <div class="widget-main">
+                        <div class="row">
+                            <div class="father">
+                                <div id="mycanvas" class="son">
+                                    <canvas id="LocationMap">库位地图</canvas>
+                                    <canvas id="PointMap">坐标信息</canvas>
+                                    <canvas id="CarInfo">堆垛机信息</canvas>
+                                    <canvas id="ContainersInfo">容器信息</canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.page-content -->
+
+<script type="text/javascript" src="/js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/layui/lay/modules/layer.js"></script>
+<script type="text/javascript" src="/js/jcanvas.js"></script>
+
+<script type="text/javascript" src="/lib/signalr/dist/browser/signalr.js"></script>
+<script type="text/javascript" src="/js/jQueryRotate.js"></script>
+<script type="text/javascript" src="/productJs/monitor/LocationMonitor.js?v=2019.07.17"></script>

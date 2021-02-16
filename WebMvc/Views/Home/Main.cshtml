@@ -1,0 +1,595 @@
+﻿@section header
+    {
+    <link rel="stylesheet" href="/css/main.css" media="all" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/homecss/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/homecss/font-awesome.css" rel="stylesheet" />
+    <link href="/css/homecss/animate.min.css" rel="stylesheet" />
+    <link href="/css/homecss/style.min862f.css" rel="stylesheet" />
+}
+<style>
+    .content {
+        width: 100%;
+        height: 1080px;
+        position: relative;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-image: url(../images/main.jpg);
+    }
+
+    .headTitle {
+        display: inline-block;
+        text-align: center;
+        width: 97.8125%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image: url(../images/top.png);
+        margin-left: 40px;
+    }
+
+    .bbzshead {
+        width: 100%;
+        height: 6.518%;
+        padding-top: 10.36px;
+        position: relative;
+        box-sizing: inherit;
+    }
+
+    .topfont {
+        font-style: italic;
+        text-align: center;
+        color: aqua;
+        font-size: 28px;
+        font-weight: bold;
+        margin: 11px auto 0;
+        width: 398px;
+        height: 46px;
+        /*background: url(../images/topfont.png) no-repeat;
+        animation: topfont 2s steps(60, end) infinite;*/
+    }
+
+    .nh-container {
+        position: relative;
+        width: 100%;
+        height: 270px;
+        border: 2px solid rgba(92,255,255,0.1);
+        /*background: rgba(10,106,255,0.1) url(../images/null.png) repeat 50% 50% !important;*/
+        overflow: visible;
+    }
+
+    .nh-table {
+        position: relative;
+        width: 100%;
+        /*height: 580px;*/
+        height: 500px;
+        border: 2px solid rgba(92,255,255,0.1);
+        /*background: rgba(10,106,255,0.1) url(../images/null.png) repeat 50% 50% !important;*/
+        overflow: visible;
+    }
+
+    .nh-container:before, .nh-container:after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        width: 5px;
+        height: 5px;
+        border-color: #0a6aff;
+        border-style: solid;
+        border-top-width: 2px;
+        border-bottom-width: 0;
+    }
+
+    .nh-container:before {
+        left: -2px;
+        border-left-width: 2px;
+        border-right-width: 0;
+    }
+
+    .nh-container:after {
+        right: -2px;
+        border-left-width: 0;
+        border-right-width: 2px;
+    }
+
+    .nh-container .nh-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+        .nh-container .nh-content:before, .nh-container .nh-content:after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            width: 5px;
+            height: 5px;
+            border-color: #0a6aff;
+            border-style: solid;
+            border-top-width: 0;
+            border-bottom-width: 2px;
+        }
+
+        .nh-container .nh-content:before {
+            left: -2px;
+            border-left-width: 2px;
+            border-right-width: 0;
+        }
+
+        .nh-container .nh-content:after {
+            right: -2px;
+            border-left-width: 0;
+            border-right-width: 2px;
+        }
+
+    .nh-table:before, .nh-table:after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        width: 5px;
+        height: 5px;
+        border-color: #0a6aff;
+        border-style: solid;
+        border-top-width: 2px;
+        border-bottom-width: 0;
+    }
+
+    .nh-table:before {
+        left: -2px;
+        border-left-width: 2px;
+        border-right-width: 0;
+    }
+
+    .nh-table:after {
+        right: -2px;
+        border-left-width: 0;
+        border-right-width: 2px;
+    }
+
+    .nh-table .nh-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+        .nh-table .nh-content:before, .nh-content:after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            width: 5px;
+            height: 5px;
+            border-color: #0a6aff;
+            border-style: solid;
+            border-top-width: 0;
+            border-bottom-width: 2px;
+        }
+
+        .nh-table .nh-content:before {
+            left: -2px;
+            border-left-width: 2px;
+            border-right-width: 0;
+        }
+
+        .nh-table .nh-content:after {
+            right: -2px;
+            border-left-width: 0;
+            border-right-width: 2px;
+        }
+
+    .iconsbody {
+        position: relative;
+        padding: 4.2% 0 2.6% 0;
+        /*margin-top: 0.15%;*/
+        width: 99%;
+        /*height: 92.3248%;*/
+        height: 84%;
+        margin-left: 0.5%;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-image: url(../images/body1.png);
+    }
+
+    .sametitle {
+        width: 100%;
+        height: 20.48%;
+        font-size: 16px;
+        font-weight: bold;
+        font-style: italic;
+        color: aqua;
+        padding-left: 10px;
+    }
+
+    .bottomlight {
+        position: absolute;
+        top: 1%;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 97.6%;
+        height: 15px;
+        background-image: url(../images/bot.png);
+        background-color: rgba(5, 31,71,1);
+    }
+</style>
+
+<div class="content">
+    <div class="bbzshead">
+        <div class="headTitle">
+            <div class="topfont">中控数据展示中心</div>
+        </div>
+    </div>
+    <div class="iconsbody">
+        <div class="row"  style="margin-left:2.5%;">
+            <div style="width:25%">
+                    <div class="nh-container">
+                        <div class="nh-content" id="stk-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+            </div>
+            <div style="width:24%">
+                    <div class="nh-container">
+                        <div class="nh-content" id="product-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+            </div>
+            <div style="width:22%">
+                    <div class="nh-container">
+                        @*<div id="center-chart" style="width: 300px; height: 50px;">
+                        <p style="text-align:center"><span style="font-size:38px;color:#00FFFF;font-family:KaiTi;width: 100px; margin:0 auto"><b>中控大屏</b></span></p>
+                    </div>*@
+                        <div class="nh-content" id="agvtask" style="width: 100%; height: 100%;">
+                            <p style="font-size:18px;text-align:center;color:aqua;font-weight: bold;"> 每日产能统计 </p>
+                            <div class="bottomlight" style="margin-left:10px;margin-top:20px;">
+                                <div style="width: 100%; height: 150px;margin-top:22px;margin-left:-5px">
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center;line-height:55px">
+                                        <span id="ponep" class="layui-badge-dot layui-bg-green" style="height:60px;width:60px;margin:auto;font-size:20px;text-align:center;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center;line-height:55px">
+                                        <span id="ptwop" class="layui-badge-dot layui-bg-blue" style="height:60px;width:60px;margin:auto;font-size:20px;text-align:center;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center;line-height:55px">
+                                        <span id="pthreep" class="layui-badge-dot layui-bg-orange" style="height:60px;width:60px;margin:auto;font-size:20px;text-align:center;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center;line-height:55px">
+                                        <span id="ptotalp" class="layui-badge-dot layui-bg-red" style="height:60px;width:60px;margin:auto;font-size:20px;text-align:center;font-weight: bold;"></span>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:green;font-weight: bold;">岛一</span><br />
+                                        <span id="pone" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:deepskyblue;font-weight: bold;">岛二</span><br />
+                                        <span id="ptwo" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:orange;font-weight: bold;">岛三</span><br />
+                                        <span id="pthree" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:red;font-weight: bold;">总产量</span><br />
+                                        <span id="ptotal" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:green;font-weight: bold;">工单一</span><br />
+                                        <span id="wone" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:deepskyblue;font-weight: bold;">工单二</span><br />
+                                        <span id="wtwo" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:orange;font-weight: bold;">工单三</span><br />
+                                        <span id="wthree" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-3" style="border:dashed;text-align:center">
+                                        <span style="height:60px;width:60px;margin:auto;font-size:16px;text-align:center;color:red;font-weight: bold;">总工单</span><br />
+                                        <span id="wtotal" style="height:60px;width:60px;margin:auto;font-size:30px;text-align:center;color:aqua;font-weight: bold;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div style="width:26%">
+                    <div class="nh-container">
+                        <div class="nh-content" id="task-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left:2.5%;">
+            <div style="margin-top:10px;width:32%">
+                <div class="nh-table" style="margin-top:10px;">
+                    <div class="nh-content" style="width: 100%; height: 100%;">
+
+                        <p class="sametitle"> 生产岛一 </p>
+                        <div class="bottomlight" style="margin-left:10px;margin-top:15px;">
+                            <div style="width: 100%; height: 80px;margin-top:18px;">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-green"><i class="layui-icon layui-icon-play" style="font-size: 40px; color:green;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:green;font-weight:bold">生产</span>
+                                            <span id="workone" class="info-box-number" style="font-weight: bold;color:green;"></span><br />
+                                            <i class="layui-icon layui-icon-ok-circle" style="color:green;"></i>
+                                            <span id="workonep" class="info-box-text" style="color:green;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon"><i class="layui-icon layui-icon-log" style="font-size: 40px; color:DeepSkyBlue;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:DeepSkyBlue;font-weight:bold">空闲</span>
+                                            <span id="freeone" class="info-box-number" style="font-weight: bold;color:DeepSkyBlue"></span><br />
+                                            <i class="layui-icon layui-icon-ok-circle" style="color:DeepSkyBlue;"></i>
+                                            <span id="freeonep" class="info-box-text" style="color:DeepSkyBlue;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-gray"><i class="layui-icon layui-icon-pause" style="font-size: 40px; color:gray;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:gray;font-weight:bold">停机</span>
+                                            <span id="stopone" class="info-box-number" style="font-weight: bold;color:gray"></span><br />
+                                            <i class="layui-icon layui-icon-ok-circle" style="color:gray"></i>
+                                            <span id="stoponep" class="info-box-text" style="color:gray"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-orange"><i class="layui-icon layui-icon-notice" style="font-size: 40px; color:orange;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:orange;font-weight:bold">报警</span>
+                                            <span id="fireone" class="info-box-number" style="font-weight: bold;color:orange"></span><br />
+                                            <i class="layui-icon layui-icon-ok-circle" style="color:orange"></i>
+                                            <span id="fireonep" class="info-box-text" style="color:orange"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="layui-icon layui-icon-util" style="font-size: 40px; color:red;"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:red;font-weight:bold">维修</span>
+                                            <span id="repairone" class="info-box-number" style="font-weight: bold;color:red"></span><br />
+                                            <i class="layui-icon layui-icon-ok-circle" style="color:red"></i>
+                                            <span id="repaironep" class="info-box-text" style="color:red"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon"><i class="layui-icon layui-icon-console" style="font-size: 40px;color:aqua;"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:aqua;font-weight:bold">设备总数</span>
+                                            <span id="totalone" class="info-box-number" style="font-weight: bold;color:red"></span><br />
+                                            <span id="totalonep" style="color:aqua;text-align:center;font-weight:bold;font-size:18px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table id="shipone" style="width:99%;color:aqua;margin-left:0.5%;margin-top:10%">
+                            <thead style="background-color:#0b336b;color:white;height:25px">
+                                <tr>
+                                    <th>设备</th>
+                                    <th>状态</th>
+                                    <th>工序</th>
+                                    <th>工位</th>
+                                    <th>工单号</th>
+                                    <th>产品</th>
+                                    <th>SN</th>
+                                </tr>
+                            </thead>
+                            <tr style="color:aqua"></tr>
+                            
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:10px;width:32%">
+                <div class="nh-table" style="margin-top:10px;">
+
+                    <div class="nh-content" id="ShipTwo" style="width: 100%; height: 100%;">
+                        <p class="sametitle"> 生产岛二 </p>
+                        <div class="bottomlight" style="margin-left:10px;margin-top:15px;">
+                            <div style="width: 100%; height: 80px;margin-top:18px;">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-green"><i class="layui-icon layui-icon-play" style="font-size: 40px; color:green;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:green;font-weight:bold">生产</span>
+                                            <span id="worktwo" class="info-box-number" style="font-weight: bold;color:green;"></span><br />
+                                            <i class="layui-icon layui-icon-triangle-r" style="color:green;"></i>
+                                            <span id="worktwop" class="info-box-text" style="color:green;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon"><i class="layui-icon layui-icon-log" style="font-size: 40px; color:DeepSkyBlue;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:DeepSkyBlue;font-weight:bold">空闲</span>
+                                            <span id="freetwo" class="info-box-number" style="font-weight: bold;color:DeepSkyBlue"></span><br />
+                                            <i class="layui-icon layui-icon-triangle-r" style="color:DeepSkyBlue;"></i>
+                                            <span id="freetwop" class="info-box-text" style="color:DeepSkyBlue;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-gray"><i class="layui-icon layui-icon-pause" style="font-size: 40px; color:gray;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:gray;font-weight:bold">停机</span>
+                                            <span id="stoptwo" class="info-box-number" style="font-weight: bold;color:gray"></span><br />
+                                            <i class="layui-icon layui-icon-triangle-r" style="color:gray"></i>
+                                            <span id="stoptwop" class="info-box-text" style="color:gray"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-orange"><i class="layui-icon layui-icon-notice" style="font-size: 40px; color:orange;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:orange;font-weight:bold">报警</span>
+                                            <span id="firetwo" class="info-box-number" style="font-weight: bold;color:orange"></span><br />
+                                            <i class="layui-icon layui-icon-triangle-r" style="color:orange"></i>
+                                            <span id="firetwop" class="info-box-text" style="color:orange"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="layui-icon layui-icon-util" style="font-size: 40px; color:red;"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:red;font-weight:bold">维修</span>
+                                            <span id="repairtwo" class="info-box-number" style="font-weight: bold;color:red"></span><br />
+                                            <i class="layui-icon layui-icon-triangle-r" style="color:red"></i>
+                                            <span id="repairtwop" class="info-box-text" style="color:red"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon"><i class="layui-icon layui-icon-console" style="font-size: 40px;color:aqua;"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:aqua;font-weight:bold">设备总数</span>
+                                            <span id="totaltwo" class="info-box-number" style="font-weight: bold;color:red"></span><br />
+                                            <span id="totaltwop" style="color:aqua;text-align:center;font-weight:bold;font-size:18px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="shiptwo"  style="width:99%;color:aqua;margin-left:0.5%;margin-top:10%">
+                            <thead style="background-color:#0b336b;color:white;height:25px">
+                                <tr>
+                                    <th>设备</th>
+                                    <th>状态</th>
+                                    <th>工序</th>
+                                    <th>工位</th>
+                                    <th>工单号</th>
+                                    <th>产品</th>
+                                    <th>SN</th>
+                                </tr>
+                            </thead>
+                            <tr style="color:aqua"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:10px;width:33%">
+                <div class="nh-table" style="margin-top:10px;">
+
+                    <div class="nh-content" id="ShipThree" style="width: 100%; height: 100%;">
+                        <p class="sametitle"> 生产岛三</p>
+                        <div class="bottomlight" style="margin-left:10px;margin-top:15px;">
+                            <div style="width: 100%; height: 80px;margin-top:18px;">
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-green"><i class="layui-icon layui-icon-play" style="font-size: 40px; color:green;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:green;font-weight:bold">生产</span>
+                                            <span id="workthree" class="info-box-number" style="font-weight: bold;color:green;"></span><br />
+                                            <i class="layui-icon layui-icon-rate" style="color:green;"></i>
+                                            <span id="workthreep" class="info-box-text" style="color:green;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon"><i class="layui-icon layui-icon-log" style="font-size: 40px; color:DeepSkyBlue;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:DeepSkyBlue;font-weight:bold">空闲</span>
+                                            <span id="freethree" class="info-box-number" style="font-weight: bold;color:DeepSkyBlue"></span><br />
+                                            <i class="layui-icon layui-icon-rate" style="color:DeepSkyBlue;"></i>
+                                            <span id="freethreep" class="info-box-text" style="color:DeepSkyBlue;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-gray"><i class="layui-icon layui-icon-pause" style="font-size: 40px; color:gray;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:gray;font-weight:bold">停机</span>
+                                            <span id="stopthree" class="info-box-number" style="font-weight: bold;color:gray"></span><br />
+                                            <i class="layui-icon layui-icon-rate" style="color:gray"></i>
+                                            <span id="stopthreep" class="info-box-text" style="color:gray"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-orange"><i class="layui-icon layui-icon-notice" style="font-size: 40px; color:orange;"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:orange;font-weight:bold">报警</span>
+                                            <span id="firethree" class="info-box-number" style="font-weight: bold;color:orange"></span><br />
+                                            <i class="layui-icon layui-icon-rate" style="color:orange"></i>
+                                            <span id="firethreep" class="info-box-text" style="color:orange"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-red"><i class="layui-icon layui-icon-util" style="font-size: 40px; color:red;"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:red;font-weight:bold">维修</span>
+                                            <span id="repairthree" class="info-box-number" style="font-weight: bold;color:red"></span><br />
+                                            <i class="layui-icon layui-icon-rate" style="color:red"></i>
+                                            <span id="repairthreep" class="info-box-text" style="color:red"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                                    <div class="info-box">
+                                        <span class="info-box-icon"><i class="layui-icon layui-icon-console" style="font-size: 40px;color:aqua;"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text" style="color:aqua;font-weight:bold">设备总数</span>
+                                            <span id="totalthree" class="info-box-number" style="font-weight: bold;color:red"></span><br />
+                                            <span id="totalthreep" style="color:aqua;text-align:center;font-weight:bold;font-size:18px"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="shipthree"  style="width:99%;color:aqua;margin-left:0.5%;margin-top:10%">
+                            <thead style="background-color:#0b336b;color:white;height:25px">
+                                <tr>
+                                    <th>设备</th>
+                                    <th>状态</th>
+                                    <th>工序</th>
+                                    <th>工位</th>
+                                    <th>工单号</th>
+                                    <th>产品</th>
+                                    <th>SN</th>
+                                </tr>
+                            </thead>
+                            <tr style="color:aqua"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/js/echarts/echarts.js"></script>
+<script type="text/javascript" src="/baseJs/main.js"></script>
+

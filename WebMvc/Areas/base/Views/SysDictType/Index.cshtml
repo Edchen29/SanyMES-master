@@ -1,0 +1,317 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+    {
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<div id="listForm" class="layui-tab-item layui-show">
+    <div id="ImportData" style="padding: 60px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;display: none;">
+        <div style="overflow:hidden">
+            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" data-type="btnTemplate"><i class="layui-icon">&#xe663;</i>生成模板</a>
+            <br />
+            <br />
+            <input type="file" name="excelfile" id="excelfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+        <div class="layui-form-item" id="panelSearch" hidden>
+            <fieldset class="layui-elem-field">
+                <legend>检索区域 - 请输入相关数据查询</legend>
+                <div class="layui-field-box" id="qform">
+                    <div class="layui-form-item layui-col-sm12">
+                        <div class="layui-inline toolList">
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius" data-type="btnQuery"><i class="layui-icon">&#xe615;</i>查询</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" data-type="btnReset"><i class="layui-icon">&#xe66c;</i>重置</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" data-type="btnClose"><i class="layui-icon">&#xe6a7;</i>关闭</a>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">id</label>
+                            <div class="layui-input-inline">
+                                <input name="qId" v-model="Id" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">字典名称</label>
+                            <div class="layui-input-inline">
+                                <input name="qDictName" v-model="DictName" type="text" autocomplete="off" lay-verify="required" maxlength="100" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">字典类型</label>
+                            <div class="layui-input-inline">
+                                <input name="qDictType" v-model="DictType" type="text" autocomplete="off" lay-verify="required" maxlength="100" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-inline">
+                                <input name="qRemark" v-model="Remark" type="text" autocomplete="off" lay-verify="required" maxlength="500" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">创建时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateTime" v-model="CreateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">创建用户</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateBy" v-model="CreateBy" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateTime" v-model="UpdateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新用户</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateBy" v-model="UpdateBy" type="text" autocomplete="off" lay-verify="required" maxlength="50" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <table id="mainList" lay-filter="mainList" lay-size="sm"></table>
+        @*<table id="mainList" class="layui-table"
+               lay-data="{height: '450', cellMinWidth: 80, page:true, id:'mainList', limit: 10, limits: [10, 50, 100, 200, 500, 1000], defaultToolbar: ['filter'], toolbar: '#toolbarTable'}"
+               lay-filter="mainList" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Id', width:80, sort: true, fixed: false, hide: false}">id</th>
+                    <th lay-data="{field:'DictName', width:150, sort: true, fixed: false, hide: false}">字典名称</th>
+                    <th lay-data="{field:'DictType', width:150, sort: true, fixed: false, hide: false,event: 'SysDictData',templet: '#ShowDtlDictType'}">字典类型</th>
+                    <th lay-data="{field:'Remark', width:150, sort: true, fixed: false, hide: false}">备注</th>
+                    <th lay-data="{field:'CreateTime', width:150, sort: true, fixed: false, hide: false}">创建时间</th>
+                    <th lay-data="{field:'CreateBy', width:150, sort: true, fixed: false, hide: false}">创建用户</th>
+                    <th lay-data="{field:'UpdateTime', width:150, sort: true, fixed: false, hide: false}">更新时间</th>
+                    <th lay-data="{field:'UpdateBy', width:150, sort: true, fixed: false, hide: false}">更新用户</th>
+                </tr>
+            </thead>
+        </table>*@
+        <script type="text/html" id="ShowDtlDictType">
+            <a href='javascript:;' class='layui-table-link '><u class="SysDictDataClass" style='color: cornflowerblue'>{{d.DictType}}</u></a>
+        </script>
+        <script type="text/html" id="toolbarTable">
+            <div class="layui-btn-container">
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnSelect"><i class="layui-icon">&#xe628;</i>检索</a>
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnRefresh"><i class="layui-icon">&#xe9aa;</i>刷新</a>
+                {{ loadMenus("SysDictType", 1) }}
+            </div>
+        </script>
+
+        <div class="layui-collapse" lay-filter="DisplayDtl">
+            <div class="layui-colla-item" style="display:none" id="DisplayDtlSysDictData">
+                <h2 class="layui-colla-title" id="title_SysDictData">字典明细</h2>
+                <div class="layui-colla-content">
+                    <table id="mainListDtlSysDictData" lay-filter="mainListDtlSysDictData" lay-size="sm"></table>
+                    @*<table id="mainListDtlSysDictData" class="layui-table"
+                           lay-data="{height: '400', cellMinWidth: 80, page:true, id:'mainListDtlSysDictData', limit: 8, limits: [8, 50, 100, 200, 500, 1000], defaultToolbar: ['filter'], toolbar: '#toolbarTableSysDictData'}"
+                           lay-filter="mainListDtlSysDictData" lay-size="sm">
+                        <thead>
+                            <tr>
+                                <th lay-data="{checkbox:true, fixed: true}"></th>
+                                <th lay-data="{field:'Id', width:80, sort: true, fixed: false, hide: false}">id</th>
+                                <th lay-data="{field:'HeaderId', width:150, sort: true, fixed: false, hide: true}">头表id</th>
+                                <th lay-data="{field:'DictSort', width:150, sort: true, fixed: false, hide: false}">字典排序</th>
+                                <th lay-data="{field:'DictLabel', width:150, sort: true, fixed: false, hide: false, templet: '#TplDictLabel'}">字典标签</th>
+                                <th lay-data="{field:'DictValue', width:150, sort: true, fixed: false, hide: false}">字典键值</th>
+                                <th lay-data="{field:'DictType', width:150, sort: true, fixed: false, hide: false}">字典类型</th>
+                                <th lay-data="{field:'CssClass', width:150, sort: true, fixed: false, hide: false, templet: '#TplCssClass'}">样式属性</th>
+                                <th lay-data="{field:'ListClass', width:150, sort: true, fixed: false, hide: false}">回显样式</th>
+                                <th lay-data="{field:'IsDefault', width:150, sort: true, fixed: false, hide: false}">是否默认（Y是 N否）</th>
+                                <th lay-data="{field:'Remark', width:150, sort: true, fixed: false, hide: false}">备注</th>
+                                <th lay-data="{field:'CreateTime', width:150, sort: true, fixed: false, hide: false}">创建时间</th>
+                                <th lay-data="{field:'CreateBy', width:150, sort: true, fixed: false, hide: false}">创建用户</th>
+                                <th lay-data="{field:'UpdateTime', width:150, sort: true, fixed: false, hide: false}">更新时间</th>
+                                <th lay-data="{field:'UpdateBy', width:150, sort: true, fixed: false, hide: false}">更新用户</th>
+                            </tr>
+                        </thead>
+                    </table>*@
+                    <script type="text/html" id="toolbarTableSysDictData">
+                        <div class="layui-btn-container">
+                            {{ loadMenus("SysDictType",2) }}
+                        </div>
+                    </script>
+
+                    <script type="text/html" id="TplDictLabel">
+                        {{# if(d.DictType == 'dictCss') {}}
+                        <label class="{{d.DictValue}}">
+                            {{d.DictLabel}}
+                        </label>
+                        {{# } else { }}
+                        {{d.DictLabel}}
+                        {{# } }}
+                    </script>
+                    <script type="text/html" id="TplCssClass">
+                        <label class="{{d.CssClass}}">
+                            {{ GetLabel('CssClass', 'DictValue', 'DictLabel', d.CssClass) }}
+                        </label>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modifyForm" class="layui-tab-item" style="padding-left:40px;padding-top:20px;">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyForm">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">字典名称</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="DictName" v-model="DictName" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">字典类型</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="DictType" v-model="DictType" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">备注</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Remark" v-model="Remark" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="modifyFormDtl_SysDictData" class="layui-tab-item" style="padding-left:40px;padding-top:20px;">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyFormDtl_SysDictData">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">头表id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="HeaderId" v-model="HeaderId" class="layui-input layui-table-click" type="text" autocomplete="off" lay-verify="" disabled>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">字典排序</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="DictSort" v-model="DictSort" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm12">
+                    <label class="layui-form-label layui-col-sm3">字典标签</label>
+                    <div class="layui-input-inline layui-col-sm9">
+                        <input name="DictLabel" v-model="DictLabel" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm12">
+                    <label class="layui-form-label layui-col-sm3">字典键值</label>
+                    <div class="layui-input-inline layui-col-sm9">
+                        <input name="DictValue" v-model="DictValue" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">字典类型</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="DictType" v-model="DictType" class="layui-input layui-table-click" type="text" autocomplete="off" lay-verify="" disabled>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">样式属性</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="CssClass" v-model="CssClass" data-model="CssClass" class="Selector_SysDictData ClearSelector_SysDictData" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">回显样式</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ListClass" v-model="ListClass" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">是否默认（Y是 N否）</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="IsDefault" v-model="IsDefault" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">备注</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Remark" v-model="Remark" class="layui-input" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">创建用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新用户</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/base/SysDictType.js?v=2019.08.19"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2019.08.19"></script>

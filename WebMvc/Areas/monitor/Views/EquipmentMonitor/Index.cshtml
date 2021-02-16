@@ -1,0 +1,710 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+    {
+    <link href="/css/treetable.css" rel="stylesheet" />
+    <link href="/css/adminlte.min.css" rel="stylesheet" />
+    <link href="/css/homecss/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/homecss/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/homecss/animate.min.css" rel="stylesheet" />
+}
+    <div class="row" style="padding:20px;">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="layui-icon layui-icon-play" style="font-size: 50px; color:white;"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text" style="color:green;font-weight:bold">运行中设备</span>
+                    <span class="info-box-number" style="color:green">10</span>
+                    <span class="description-percentage text-green"><i class="layui-icon layui-icon-triangle-r"></i> 10%</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+            <div class="info-box">
+                <span class="info-box-icon layui-bg-blue"><i class="layui-icon layui-icon-log" style="font-size: 50px; color:white;"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text" style="color:DeepSkyBlue;font-weight:bold">空闲中设备</span>
+                    <span class="info-box-number" style="color:DeepSkyBlue">39</span>
+                    <span class="info-box-text" style="color:DeepSkyBlue;"><i class="layui-icon layui-icon-triangle-r"></i> 75%</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-gray"><i class="layui-icon layui-icon-pause" style="font-size: 50px; color:white;"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text" style="color:gray;font-weight:bold">停机中未启用设备</span>
+                    <span class="info-box-number" style="color:gray">1</span>
+                    <span class="description-percentage text-gray"><i class="layui-icon layui-icon-triangle-r"></i> 1%</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-orange"><i class="layui-icon layui-icon-notice" style="font-size: 50px; color:white;"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text" style="color:orange;font-weight:bold">报警中设备</span>
+                    <span class="info-box-number" style="color:orange">5</span>
+                    <span class="description-percentage text-orange"><i class="layui-icon layui-icon-triangle-r"></i> 5%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="layui-icon layui-icon-util" style="font-size: 50px; color:white;"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text" style="color:red;font-weight:bold">维修中设备</span>
+                    <span class="info-box-number" style="color:red">2</span>
+                    <span class="description-percentage text-red"><i class="layui-icon layui-icon-triangle-r"></i> 2%</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+            <div class="info-box">
+                <span class="info-box-icon layui-bg-cyan"><i class="layui-icon layui-icon-vercode" style="font-size: 50px; color:white;"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text" style="color:Navy;font-weight:bold">就绪中设备</span>
+                    <span class="info-box-number" style="color:Navy">10</span>
+                    <span class="description-percentage text-Navy"><i class="layui-icon layui-icon-triangle-r"></i> 15%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row" style="padding:20px;">
+    <div class="box box-info" style="width:100%">
+        <blockquote class="layui-elem-quote"><span style="font-size:18px;color:#009688;font-family:STSong;font-weight:bold;width: 100px; margin:0 auto"><b>生产岛1</b></span></blockquote>
+        <div class="box-body">
+            <div id="greenview"></div>
+            <script id="greendata" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-play" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="blueview"></div>
+            <script id="bluedata" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-blue">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-log" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="grayview"></div>
+            <script id="graydata" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-gray">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-pause" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="orangeview"></div>
+            <script id="orangedata" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-orange">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-notice" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="redview"></div>
+            <script id="reddata" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-red">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-util" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+        </div>
+    </div>
+    <div class="box box-info" style="width:100%">
+        <blockquote class="layui-elem-quote"><span style="font-size:18px;color:#009688;font-family:STSong;font-weight:bold;width: 100px; margin:0 auto"><b>生产岛2</b></span></blockquote>
+        <div class="box-body">
+            <div id="greenview2"></div>
+            <script id="greendata2" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-play" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 70%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="blueview2"></div>
+            <script id="bluedata2" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-blue">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-log" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="grayview2"></div>
+            <script id="graydata2" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-gray">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-pause" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="orangeview2"></div>
+            <script id="orangedata2" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-orange">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-notice" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+            <div id="redview2"></div>
+            <script id="reddata2" type="text/html">
+                @*<h3>{{ d.title }}</h3>*@
+                <ul>
+                    {{#  layui.each(d.list, function(index, item){ }}
+                    <li>
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <div class="info-box bg-red">
+                                <span class="info-box-icon">
+                                    <i class="layui-icon layui-icon-util" style="font-size: 50px; color:white;"></i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-number">{{ item.Status}}.........</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 50%"></div>
+                                    </div>
+                                    <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                    <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                    <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                    <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                    <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                    <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                    <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{#  }); }}
+                    {{#  if(d.list.length === 0){ }}
+                    @*无数据*@
+                    {{#  } }}
+                </ul>
+            </script>
+        </div>
+    </div>
+    <div class="box box-info" style="width:100%">
+        <blockquote class="layui-elem-quote"><span style="font-size:18px;color:#009688;font-family:STSong;font-weight:bold;width: 100px; margin:0 auto"><b>生产岛3</b></span></blockquote>
+        <div id="greenview3"></div>
+        <script id="greendata3" type="text/html">
+            @*<h3>{{ d.title }}</h3>*@
+            <ul>
+                {{#  layui.each(d.list, function(index, item){ }}
+                <li>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon">
+                                <i class="layui-icon layui-icon-play" style="font-size: 50px; color:white;"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-number">{{ item.Status}}.........</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                                <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{#  }); }}
+                {{#  if(d.list.length === 0){ }}
+                @*无数据*@
+                {{#  } }}
+            </ul>
+        </script>
+        <div id="blueview3"></div>
+        <script id="bluedata3" type="text/html">
+            @*<h3>{{ d.title }}</h3>*@
+            <ul>
+                {{#  layui.each(d.list, function(index, item){ }}
+                <li>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                        <div class="info-box bg-blue">
+                            <span class="info-box-icon">
+                                <i class="layui-icon layui-icon-log" style="font-size: 50px; color:white;"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-number">{{ item.Status}}.........</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%"></div>
+                                </div>
+                                <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{#  }); }}
+                {{#  if(d.list.length === 0){ }}
+                @*无数据*@
+                {{#  } }}
+            </ul>
+        </script>
+        <div id="grayview3"></div>
+        <script id="graydata3" type="text/html">
+            @*<h3>{{ d.title }}</h3>*@
+            <ul>
+                {{#  layui.each(d.list, function(index, item){ }}
+                <li>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                        <div class="info-box bg-gray">
+                            <span class="info-box-icon">
+                                <i class="layui-icon layui-icon-pause" style="font-size: 50px; color:white;"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-number">{{ item.Status}}.........</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%"></div>
+                                </div>
+                                <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{#  }); }}
+                {{#  if(d.list.length === 0){ }}
+                @*无数据*@
+                {{#  } }}
+            </ul>
+        </script>
+        <div id="orangeview3"></div>
+        <script id="orangedata3" type="text/html">
+            @*<h3>{{ d.title }}</h3>*@
+            <ul>
+                {{#  layui.each(d.list, function(index, item){ }}
+                <li>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                        <div class="info-box bg-orange">
+                            <span class="info-box-icon">
+                                <i class="layui-icon layui-icon-notice" style="font-size: 50px; color:white;"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-number">{{ item.Status}}.........</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%"></div>
+                                </div>
+                                <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{#  }); }}
+                {{#  if(d.list.length === 0){ }}
+                @*无数据*@
+                {{#  } }}
+            </ul>
+        </script>
+        <div id="redview3"></div>
+        <script id="reddata3" type="text/html">
+            @*<h3>{{ d.title }}</h3>*@
+            <ul>
+                {{#  layui.each(d.list, function(index, item){ }}
+                <li>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                        <div class="info-box bg-red">
+                            <span class="info-box-icon">
+                                <i class="layui-icon layui-icon-util" style="font-size: 50px; color:white;"></i>
+                            </span>
+                            <div class="info-box-content">
+                                <span class="info-box-number">{{ item.Status}}.........</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%"></div>
+                                </div>
+                                <span class="info-box-number">名称：{{ item.EquipmentName }}</span>
+                                <span class="info-box-number">编号：{{ item.EquipmentCode }}</span>
+                                <span class="info-box-text">工位：{{ item.StationName }}</span>
+                                <span class="info-box-text">工序：{{ item.StepName }}</span>
+                                <span class="info-box-text">工单：{{ item.WONumber || '' }}</span>
+                                <span class="info-box-text">产品：{{ item.ProductCode || '' }}</span>
+                                <span class="info-box-text">SN：{{ item.SerialNumber || '' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{#  }); }}
+                {{#  if(d.list.length === 0){ }}
+                @*无数据*@
+                {{#  } }}
+            </ul>
+        </script>
+    </div>
+</div>
+<div id="listForm" class="layui-tab-item layui-show">
+    <div id="ImportData" style="padding: 60px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;display: none;">
+        <div style="overflow:hidden">
+            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" data-type="btnTemplate"><i class="layui-icon">&#xe663;</i>生成模板</a>
+            <br />
+            <br />
+            <input type="file" name="excelfile" id="excelfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+        <div class="layui-form-item" id="panelSearch" hidden>
+            <fieldset class="layui-elem-field">
+                <legend>检索区域 - 请输入相关数据查询</legend>
+                <div class="layui-field-box" id="qform">
+                    <div class="layui-form-item layui-col-sm12">
+                        <div class="layui-inline toolList">
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius" data-type="btnQuery"><i class="layui-icon">&#xe615;</i>查询</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" data-type="btnReset"><i class="layui-icon">&#xe66c;</i>重置</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" data-type="btnClose"><i class="layui-icon">&#xe6a7;</i>关闭</a>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">Id</label>
+                            <div class="layui-input-inline">
+                                <input name="qId" v-model="Id" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">设备编号</label>
+                            <div class="layui-input-inline">
+                                <input name="qEquipmentCode" v-model="EquipmentCode" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">设备名称</label>
+                            <div class="layui-input-inline">
+                                <input name="qEquipmentName" v-model="EquipmentName" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">生产工厂</label>
+                            <div class="layui-input-inline">
+                                <input name="qFactoryName" v-model="FactoryName" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">生产车间</label>
+                            <div class="layui-input-inline">
+                                <input name="qWorkshopName" v-model="WorkshopName" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">线体</label>
+                            <div class="layui-input-inline">
+                                <input name="qLineName" v-model="LineName" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">工序</label>
+                            <div class="layui-input-inline">
+                                <input name="qStepName" v-model="StepName" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">工位</label>
+                            <div class="layui-input-inline">
+                                <input name="qStationName" v-model="StationName" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">设备状态</label>
+                            <div class="layui-input-inline">
+                                <input name="qStatus" v-model="Status" type="text" autocomplete="off" lay-verify="required" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="row" style="padding:20px;">
+            <table id="mainList" lay-filter="mainList"></table>
+        </div>
+        @*<script type="text/html" id="toolbarTable">
+                <div class="layui-btn-container">
+                    <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnSelect"><i class="layui-icon">&#xe628;</i>检索</a>
+                    <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnRefresh"><i class="layui-icon">&#xe9aa;</i>刷新</a>
+                    {{ loadMenus("EquipmentMonitor", 1) }}
+                </div>
+            </script>*@
+    </form>
+</div>
+
+<div id="modifyForm" class="layui-tab-item">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyForm">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">Id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">设备编号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="EquipmentCode" v-model="EquipmentCode" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">设备名称</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="EquipmentName" v-model="EquipmentName" type="text" autocomplete="off" lay-verify="" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/monitor/EquipmentMonitor.js?v=2019.11.11"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2019.11.11"></script>

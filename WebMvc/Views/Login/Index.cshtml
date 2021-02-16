@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登录页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../css/login.css" media="all" />
+</head>
+<body class="main">
+    <div id="mainBody">
+        <div id="cloud1" class="cloud" style="background-position: 891.1px 100px;"></div>
+        <div id="cloud2" class="cloud" style="background-position: 401px 460px;"></div>
+    </div>
+    <div class="logintop">
+        <ul id="Img" style="float:left">
+            <li><img src="~/images/logo.png" style="height:38px;" /></li>
+        </ul>
+        <ul>
+            <li><b><font style="font-size:30px" color="#FFF">数字化智能管理平台</font></b></li>
+        </ul>
+    </div>
+    <div class="loginbody">
+        <span class="systemlogo"></span>
+        <div class="loginbox" style="position: absolute;left: 41%;">
+            <form class="layui-form">
+                <b><font style="font-size:20px;" color="#FFF">中海油工艺管道智能制造中控系统</font></b>
+                <ul>
+                    <li>
+                        <input name="username" type="text" id="username" class="loginuser ipt" value=""
+                               placeholder="请输入用户名" lay-verify="required" autofocus="autofocus">
+                    </li>
+                    <li>
+                        <input name="password" type="password" id="password" autocomplete="new-password" value=""
+                               class="loginpwd ipt" placeholder="请输入密码" lay-verify="required">
+                    </li>
+                    <li>
+                        <button class="layui-btn loginbtn" style="width:105px;margin-top:50px" lay-submit lay-filter="login">登录</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div class="loginbm">版权所有 &copy; 2019 中海石油(中国)有限公司 </div>
+
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <script type="text/javascript" src="/basejs/login.js"></script>
+</body>
+</html>

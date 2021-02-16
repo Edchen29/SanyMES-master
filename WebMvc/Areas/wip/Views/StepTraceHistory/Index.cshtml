@@ -1,0 +1,285 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<div id="listForm" class="layui-tab-item layui-show">
+    <div id="ImportData" style="padding: 60px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;display: none;">
+        <div style="overflow:hidden">
+            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-normal" data-type="btnTemplate"><i class="layui-icon">&#xe663;</i>生成模板</a>
+            <br />
+            <br />
+            <input type="file" name="excelfile" id="excelfile" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" action="" lay-filter="listForm">
+        <div class="layui-form-item" id="panelSearch" hidden>
+            <fieldset class="layui-elem-field">
+                <legend>检索区域 - 请输入相关数据查询</legend>
+                <div class="layui-field-box" id="qform">
+                    <div class="layui-form-item layui-col-sm12">
+                        <div class="layui-inline toolList">
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius" data-type="btnQuery"><i class="layui-icon">&#xe615;</i>查询</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm" data-type="btnReset"><i class="layui-icon">&#xe66c;</i>重置</a>
+                            <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-danger" data-type="btnClose"><i class="layui-icon">&#xe6a7;</i>关闭</a>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">Id</label>
+                            <div class="layui-input-inline">
+                                <input name="qId" v-model="Id" type="text" autocomplete="off" lay-verify="required" class="layui-input NumText">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">工单号</label>
+                            <div class="layui-input-inline">
+                                <input name="qWONumber" v-model="WONumber" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">产品</label>
+                            <div class="layui-input-inline">
+                                <input name="qProductCode" v-model="ProductCode" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">序列号</label>
+                            <div class="layui-input-inline">
+                                <input name="qSerialNumber" v-model="SerialNumber" type="text" autocomplete="off" lay-verify="required" maxlength="32" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">线体</label>
+                            <div class="layui-input-inline">
+                                <select name="qLineId" v-model="LineId" data-model="LineId" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">当前工序</label>
+                            <div class="layui-input-inline">
+                                <select name="qStepId" v-model="StepId" data-model="StepId" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">当前工位</label>
+                            <div class="layui-input-inline">
+                                <select name="qStationId" v-model="StationId" data-model="StationId" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">下道工序</label>
+                            <div class="layui-input-inline">
+                                <select name="qNextStepId" v-model="NextStepId" data-model="NextStepId" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">是否不良</label>
+                            <div class="layui-input-inline">
+                                <select name="qIsNG" v-model="IsNG" data-model="IsNG" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">不良代号</label>
+                            <div class="layui-input-inline">
+                                <select name="qNGcode" v-model="NGcode" data-model="NGcode" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">是否报废</label>
+                            <div class="layui-input-inline">
+                                <select name="qIsInvalid" v-model="IsInvalid" data-model="IsInvalid" class="Selector" lay-filter="qform"></select>
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">进站时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qStationInTime" v-model="StationInTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">出站时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qStationOutTime" v-model="StationOutTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">进线时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qLineInTime" v-model="LineInTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">出线时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qLineOutTime" v-model="LineOutTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">建立时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateTime" v-model="CreateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">建立者</label>
+                            <div class="layui-input-inline">
+                                <input name="qCreateBy" v-model="CreateBy" type="text" autocomplete="off" lay-verify="required" maxlength="16" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新时间</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateTime" v-model="UpdateTime" type="text" autocomplete="off" lay-verify="required" class="layui-input layui-date">
+                            </div>
+                        </div>
+                        <div class="layui-col-sm3">
+                            <label class="layui-form-label">更新者</label>
+                            <div class="layui-input-inline">
+                                <input name="qUpdateBy" v-model="UpdateBy" type="text" autocomplete="off" lay-verify="required" maxlength="16" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    
+        <table id="mainList" lay-filter="mainList"></table>
+        <script type="text/html" id="toolbarTable">
+            <div class="layui-btn-container">
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnSelect"><i class="layui-icon">&#xe628;</i>检索</a>
+                <a herf="javascript:;" class="layui-btn layui-btn-sm layui-btn-mini" lay-event="btnRefresh"><i class="layui-icon">&#xe9aa;</i>刷新</a>
+                {{ loadMenus("StepTraceHistory", 1) }}
+            </div>
+        </script>
+    </form>
+</div>
+
+<div id="modifyForm" class="layui-tab-item">
+    <form class="layui-form layui-form-pane" action="" lay-filter="modifyForm">
+        <div class="layui-card">
+            <div class="layui-row">
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">Id</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="Id" v-model="Id" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input NumText">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">工单号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="WONumber" v-model="WONumber" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">产品</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="ProductCode" v-model="ProductCode" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">序列号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="SerialNumber" v-model="SerialNumber" type="text" autocomplete="off" lay-verify="" maxlength="32" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">线体</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="LineId" v-model="LineId" data-model="LineId" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">当前工序</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="StepId" v-model="StepId" data-model="StepId" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">当前工位</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="StationId" v-model="StationId" data-model="StationId" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">下道工序</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="NextStepId" v-model="NextStepId" data-model="NextStepId" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">是否不良</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="IsNG" v-model="IsNG" data-model="IsNG" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">不良代号</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="NGcode" v-model="NGcode" data-model="NGcode" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">是否报废</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <select name="IsInvalid" v-model="IsInvalid" data-model="IsInvalid" class="Selector ClearSelector_StepTraceHistory" lay-filter="eform"></select>
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">进站时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="StationInTime" v-model="StationInTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">出站时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="StationOutTime" v-model="StationOutTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">进线时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LineInTime" v-model="LineInTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div class="layui-col-sm6">
+                    <label class="layui-form-label layui-col-sm3">出线时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="LineOutTime" v-model="LineOutTime" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">建立时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateTime" v-model="CreateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">建立者</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="CreateBy" v-model="CreateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新时间</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateTime" v-model="UpdateTime" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" class="layui-input layui-date">
+                    </div>
+                </div>
+                <div hidden>
+                    <label class="layui-form-label layui-col-sm3">更新者</label>
+                    <div class="layui-input-inline layui-col-sm6">
+                        <input name="UpdateBy" v-model="UpdateBy" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="" maxlength="16" class="layui-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/wip/StepTraceHistory.js?v=2019.11.11"></script>
+<script type="text/javascript" src="/basejs/Common.js?v=2019.11.11"></script>

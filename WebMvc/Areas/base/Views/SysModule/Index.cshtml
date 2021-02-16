@@ -1,0 +1,1335 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header
+    {
+    <link rel="stylesheet" href="/css/treetable.css" />
+    <link rel="stylesheet" href="/layui/font/fonteditor/icon.css" />
+    <link rel="stylesheet" href="/layui/font/fonteditor/page.css" />
+}
+<div>
+    <blockquote class="layui-elem-quote toolList layui-col-xs9" id="menus"></blockquote>
+    <blockquote class="layui-elem-quote toolList" id="menus2"></blockquote>
+</div>
+
+<div class="layui-row">
+    <div class="layui-col-xs2">
+        <ul id="tree" class="ztree"
+            style="padding: 2px; border: 1px solid #ddd; overflow: auto;"></ul>
+    </div>
+    <div class="layui-col-xs7">
+        <table class="layui-table"
+               lay-data="{height: 'full-60', page:true, id:'mainList'}"
+               lay-filter="list" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Id', width:80, sort: true, fixed: false, hide: false}">Id</th>
+                    <th lay-data="{field:'Name', width:120, sort: true, fixed: false}">模块名称</th>
+                    <th lay-data="{field:'CascadeId', width:100, sort: true,}">层级ID</th>
+                    <th lay-data="{field:'Code', width:80}">模块标识</th>
+                    <th lay-data="{field:'Url', width:200}">Url</th>
+                    <th lay-data="{field:'IconName', width:60,templet: '#iconTpl'}">图标</th>
+                    <th lay-data="{field:'ParentName', width:135}">父节点名称</th>
+                    <th lay-data="{field:'SortNo', width:100, sort: true,}">排序号</th>
+                    <th lay-data="{field:'IsShow', width:100, sort: true,templet: '#IsShowTpl'}">显示</th>
+                    <th lay-data="{field:'CreateBy', width:150, sort: true, fixed: false, hide: false}">创建者</th>
+                    <th lay-data="{field:'CreateTime', width:150, sort: true, fixed: false, hide: false}">创建时间</th>
+                    <th lay-data="{field:'UpdateBy', width:150, sort: true, fixed: false, hide: false}">更新者</th>
+                    <th lay-data="{field:'UpdateTime', width:150, sort: true, fixed: false, hide: false}">更新时间</th>
+                    <th lay-data="{fixed: 'right', width:100, toolbar: '#barList'}"></th>
+                </tr>
+            </thead>
+        </table>
+        <!--列表右边的按钮-->
+        <script type="text/html" id="barList">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看菜单</a>
+        </script>
+        <script type="text/html" id="iconTpl">
+            {{#  if( d.IconName != null && d.IconName != ''){ }}
+            <i class="layui-icon">{{ d.IconName }}</i>
+            {{#  } else { }}
+            {{ d.IconName }}
+            {{#  } }}
+        </script>
+        <script type="text/html" id="IsShowTpl">
+            {{#  if( d.IsShow == 1){ }}
+            显示
+            {{#  } else { }}
+            隐藏
+            {{#  } }}
+        </script>
+    </div>
+
+    <div class="layui-col-xs">
+        <!--菜单列表-->
+        <table class="layui-table"
+               lay-data="{height: 'full-60', id:'menuList'}"
+               lay-filter="menulist" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'AreaMenus', width:80, sort: true}">区域</th>
+                    <th lay-data="{field:'Icon', width:150,templet: '#menuTpl'}">菜单</th>
+                    <th lay-data="{field:'Sort', width:80}">排序</th>
+                </tr>
+            </thead>
+        </table>
+
+        <script type="text/html" id="menuTpl">
+            <button class="layui-btn layui-btn-xs {{ d.Class }} layui-btn-fluid" alt="{{ d.DomId }}"><i class="layui-icon">{{ d.Icon }}</i>{{ d.Name }}</button>
+        </script>
+    </div>
+</div>
+
+<!--模块添加/编辑窗口-->
+<div id="divEdit" style="display: none">
+    <form class="layui-form layui-form-pane" action="" id="formEdit">
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">Id</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="Id" v-model="Id" class="layui-input" style="background-color:#eee;" disabled="disabled" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+
+        <input type="hidden" name="CascadeId" v-model="CascadeId" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">模块名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="Name" v-model="Name" required lay-verify="required"
+                       placeholder="请输入模块名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模块标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="Code" v-model="Code"
+                       placeholder="比如：Module" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">URL地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="Url" v-model="Url"
+                       placeholder="请输入URL" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="IconName" v-model="IconName"
+                       placeholder="点击选择图标" autocomplete="off" class="layui-input IconName">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序号</label>
+            <div class="layui-input-block">
+                <input type="text" name="SortNo" v-model="SortNo" required lay-verify="required"
+                       placeholder="请输入排序号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" pane>
+            <label class="layui-form-label">显示</label>
+            <div class="layui-input-block">
+                <input type="radio" name="IsShow" value="1" title="显示" checked>
+                <input type="radio" name="IsShow" value="0" title="隐藏">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属模块</label>
+            <div class="layui-input-block">
+                <input id="ParentName" name="ParentName" v-model="ParentName" class="layui-input" readonly />
+                <input id="ParentId" name="ParentId" v-model="ParentId" type="hidden" />
+                <div id="menuContent" class="menuContent" style="display: none;">
+                    <ul id="org" class="ztree"></ul>
+                </div>
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">创建者</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="CreateBy" v-model="CreateBy" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">创建时间</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="CreateTime" v-model="CreateTime" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">更新者</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="UpdateBy" v-model="UpdateBy" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">更新时间</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="UpdateTime" v-model="UpdateTime" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--添加菜单窗口-->
+<div id="divMenuEdit" style="display: none">
+    <form class="layui-form layui-form-pane" action="" id="mfromEdit">
+        <input type="hidden" name="Id" v-model="Id" />
+        <input type="hidden" name="ModuleId" v-model="ModuleId" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="Name" v-model="Name" required lay-verify="required"
+                       placeholder="请输入名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">DomId</label>
+            <div class="layui-input-block">
+                <input type="text" name="DomId" v-model="DomId" required lay-verify="required"
+                       placeholder="请输入DomId" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">样式</label>
+            <div class="layui-input-block">
+                <input type="text" name="Class" v-model="Class"
+                       placeholder="菜单的样式，如：layui-btn-normal" autocomplete="off" class="layui-input Class" value="layui-btn-normal">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="Icon" v-model="Icon"
+                       placeholder="图标，如：layui-btn-danger" autocomplete="off" class="layui-input IconName">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序号</label>
+            <div class="layui-input-block">
+                <input type="text" name="Sort" v-model="Sort" required lay-verify="required"
+                       placeholder="请输入排序号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">区域</label>
+            <div class="layui-input-block">
+                <input type="text" name="AreaMenus" v-model="AreaMenus" required lay-verify="required"
+                       placeholder="请输入菜单区域" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">属性</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="Attr" v-model="Attr" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">脚本</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="Script" v-model="Script" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">备注</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="Remark" v-model="Remark" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">创建者</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="CreateBy" v-model="CreateBy" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">创建时间</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="CreateTime" v-model="CreateTime" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">更新者</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="UpdateBy" v-model="UpdateBy" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div hidden>
+            <label class="layui-form-label layui-col-sm3">更新时间</label>
+            <div class="layui-input-inline layui-col-sm6">
+                <input name="UpdateTime" v-model="UpdateTime" class="layui-input" type="text" autocomplete="off" lay-verify="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="mformSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--选择样式窗口-->
+<div id="divClassEdit" style="display: none">
+    <form class="layui-form layui-form-pane" action="" id="mfromClassEdit">
+        <div class="main">
+            <ul class="iconfont-list">
+                <li class="dib">
+                    <a herf="javascript:;" class="layui-btn layui-btn-primary">样式1</a>
+                    <div class="code-name">layui-btn-primary</div>
+                </li>
+
+                <li class="dib">
+                    <a herf="javascript:;" class="layui-btn layui-btn-normal">样式2</a>
+                    <div class="code-name">layui-btn-normal</div>
+                </li>
+
+                <li class="dib">
+                    <a herf="javascript:;" class="layui-btn layui-btn-mini">样式2</a>
+                    <div class="code-name">layui-btn-mini</div>
+                </li>
+
+                <li class="dib">
+                    <a herf="javascript:;" class="layui-btn layui-btn-warm">样式2</a>
+                    <div class="code-name">layui-btn-warm</div>
+                </li>
+
+                <li class="dib">
+                    <a herf="javascript:;" class="layui-btn layui-btn-danger">样式2</a>
+                    <div class="code-name">layui-btn-danger</div>
+                </li>
+
+                <li class="dib">
+                    <a herf="javascript:;" class="layui-btn layui-btn-disabled">样式2</a>
+                    <div class="code-name">layui-btn-disabled</div>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+<!--选择图标窗口-->
+<div id="divIconNameEdit" style="display: none">
+    <form class="layui-form layui-form-pane" action="" id="mfromIconNameEdit">
+        <div class="main">
+            <ul class="iconfont-list">
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe512;</span>
+                    <div class="name">数字2</div>
+                    <div class="code-name">&amp;#xe512;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe514;</span>
+                    <div class="name">数字4</div>
+                    <div class="code-name">&amp;#xe514;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe515;</span>
+                    <div class="name">数字5</div>
+                    <div class="code-name">&amp;#xe515;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe510;</span>
+                    <div class="name">数字0</div>
+                    <div class="code-name">&amp;#xe510;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe511;</span>
+                    <div class="name">数字1</div>
+                    <div class="code-name">&amp;#xe511;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe516;</span>
+                    <div class="name">数字6</div>
+                    <div class="code-name">&amp;#xe516;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe517;</span>
+                    <div class="name">数字7</div>
+                    <div class="code-name">&amp;#xe517;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe519;</span>
+                    <div class="name">数字9</div>
+                    <div class="code-name">&amp;#xe519;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe513;</span>
+                    <div class="name">数字3</div>
+                    <div class="code-name">&amp;#xe513;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe518;</span>
+                    <div class="name">数字8</div>
+                    <div class="code-name">&amp;#xe518;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe641;</span>
+                    <div class="name">share</div>
+                    <div class="code-name">&amp;#xe641;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe615;</span>
+                    <div class="name">search</div>
+                    <div class="code-name">&amp;#xe615;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe611;</span>
+                    <div class="name">reply-fill</div>
+                    <div class="code-name">&amp;#xe611;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe60f;</span>
+                    <div class="name">menu-fill</div>
+                    <div class="code-name">&amp;#xe60f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe614;</span>
+                    <div class="name">set-fill</div>
+                    <div class="code-name">&amp;#xe614;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe620;</span>
+                    <div class="name">set-sm</div>
+                    <div class="code-name">&amp;#xe620;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe629;</span>
+                    <div class="name">chart-screen</div>
+                    <div class="code-name">&amp;#xe629;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe628;</span>
+                    <div class="name">engine</div>
+                    <div class="code-name">&amp;#xe628;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6a7;</span>
+                    <div class="name">close-fill</div>
+                    <div class="code-name">&amp;#xe6a7;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6a6;</span>
+                    <div class="name">close</div>
+                    <div class="code-name">&amp;#xe6a6;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe600;</span>
+                    <div class="name">star</div>
+                    <div class="code-name">&amp;#xe600;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe617;</span>
+                    <div class="name">circle-dot</div>
+                    <div class="code-name">&amp;#xe617;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe606;</span>
+                    <div class="name">chat</div>
+                    <div class="code-name">&amp;#xe606;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6a5;</span>
+                    <div class="name">ok-circle</div>
+                    <div class="code-name">&amp;#xe6a5;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe609;</span>
+                    <div class="name">release</div>
+                    <div class="code-name">&amp;#xe609;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe60a;</span>
+                    <div class="name">list</div>
+                    <div class="code-name">&amp;#xe60a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe62c;</span>
+                    <div class="name">chart</div>
+                    <div class="code-name">&amp;#xe62c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe61b;</span>
+                    <div class="name">layim-theme</div>
+                    <div class="code-name">&amp;#xe61b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe62d;</span>
+                    <div class="name">table</div>
+                    <div class="code-name">&amp;#xe62d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe602;</span>
+                    <div class="name">right</div>
+                    <div class="code-name">&amp;#xe602;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe603;</span>
+                    <div class="name">left</div>
+                    <div class="code-name">&amp;#xe603;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe69c;</span>
+                    <div class="name">face-cry</div>
+                    <div class="code-name">&amp;#xe69c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe698;</span>
+                    <div class="name">cart-simple</div>
+                    <div class="code-name">&amp;#xe698;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6af;</span>
+                    <div class="name">face-smile</div>
+                    <div class="code-name">&amp;#xe6af;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe62f;</span>
+                    <div class="name">upload-circle</div>
+                    <div class="code-name">&amp;#xe62f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe630;</span>
+                    <div class="name">templeate-1</div>
+                    <div class="code-name">&amp;#xe630;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe61f;</span>
+                    <div class="name">add-circle</div>
+                    <div class="code-name">&amp;#xe61f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe601;</span>
+                    <div class="name">download-circle</div>
+                    <div class="code-name">&amp;#xe601;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe62e;</span>
+                    <div class="name">tree</div>
+                    <div class="code-name">&amp;#xe62e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6b2;</span>
+                    <div class="name">survey</div>
+                    <div class="code-name">&amp;#xe6b2;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe631;</span>
+                    <div class="name">util</div>
+                    <div class="code-name">&amp;#xe631;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe642;</span>
+                    <div class="name">edit</div>
+                    <div class="code-name">&amp;#xe642;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe664;</span>
+                    <div class="name">face-surprised</div>
+                    <div class="code-name">&amp;#xe664;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe61a;</span>
+                    <div class="name">down</div>
+                    <div class="code-name">&amp;#xe61a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe645;</span>
+                    <div class="name">speaker</div>
+                    <div class="code-name">&amp;#xe645;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe621;</span>
+                    <div class="name">file</div>
+                    <div class="code-name">&amp;#xe621;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6c9;</span>
+                    <div class="name">rate-half</div>
+                    <div class="code-name">&amp;#xe6c9;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe632;</span>
+                    <div class="name">layouts</div>
+                    <div class="code-name">&amp;#xe632;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe608;</span>
+                    <div class="name">add-circle-fine</div>
+                    <div class="code-name">&amp;#xe608;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe705;</span>
+                    <div class="name">read</div>
+                    <div class="code-name">&amp;#xe705;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe633;</span>
+                    <div class="name">prev-circle</div>
+                    <div class="code-name">&amp;#xe633;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe607;</span>
+                    <div class="name">help</div>
+                    <div class="code-name">&amp;#xe607;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe634;</span>
+                    <div class="name">carousel</div>
+                    <div class="code-name">&amp;#xe634;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe66f;</span>
+                    <div class="name">username</div>
+                    <div class="code-name">&amp;#xe66f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe635;</span>
+                    <div class="name">code-circle</div>
+                    <div class="code-name">&amp;#xe635;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe636;</span>
+                    <div class="name">water</div>
+                    <div class="code-name">&amp;#xe636;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe670;</span>
+                    <div class="name">find-fill</div>
+                    <div class="code-name">&amp;#xe670;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe619;</span>
+                    <div class="name">up</div>
+                    <div class="code-name">&amp;#xe619;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe715;</span>
+                    <div class="name">location</div>
+                    <div class="code-name">&amp;#xe715;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe60b;</span>
+                    <div class="name">about</div>
+                    <div class="code-name">&amp;#xe60b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe651;</span>
+                    <div class="name">pause</div>
+                    <div class="code-name">&amp;#xe651;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe61c;</span>
+                    <div class="name">404</div>
+                    <div class="code-name">&amp;#xe61c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe652;</span>
+                    <div class="name">play</div>
+                    <div class="code-name">&amp;#xe652;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe637;</span>
+                    <div class="name">date</div>
+                    <div class="code-name">&amp;#xe637;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe640;</span>
+                    <div class="name">delete</div>
+                    <div class="code-name">&amp;#xe640;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe61d;</span>
+                    <div class="name">layim-uploadfile</div>
+                    <div class="code-name">&amp;#xe61d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe612;</span>
+                    <div class="name">friends</div>
+                    <div class="code-name">&amp;#xe612;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe604;</span>
+                    <div class="name">top</div>
+                    <div class="code-name">&amp;#xe604;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe9aa;</span>
+                    <div class="name">refresh-3</div>
+                    <div class="code-name">&amp;#xe9aa;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe605;</span>
+                    <div class="name">ok</div>
+                    <div class="code-name">&amp;#xe605;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe638;</span>
+                    <div class="name">layer</div>
+                    <div class="code-name">&amp;#xe638;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe60c;</span>
+                    <div class="name">face-smile-fine</div>
+                    <div class="code-name">&amp;#xe60c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe659;</span>
+                    <div class="name">dollar</div>
+                    <div class="code-name">&amp;#xe659;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe613;</span>
+                    <div class="name">group</div>
+                    <div class="code-name">&amp;#xe613;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe64c;</span>
+                    <div class="name">link</div>
+                    <div class="code-name">&amp;#xe64c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe67a;</span>
+                    <div class="name">rate-solid</div>
+                    <div class="code-name">&amp;#xe67a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe61e;</span>
+                    <div class="name">layim-download</div>
+                    <div class="code-name">&amp;#xe61e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe735;</span>
+                    <div class="name">diamond</div>
+                    <div class="code-name">&amp;#xe735;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe60e;</span>
+                    <div class="name">log</div>
+                    <div class="code-name">&amp;#xe60e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe60d;</span>
+                    <div class="name">picture-fine</div>
+                    <div class="code-name">&amp;#xe60d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe63f;</span>
+                    <div class="name">circle</div>
+                    <div class="code-name">&amp;#xe63f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe64d;</span>
+                    <div class="name">unlink</div>
+                    <div class="code-name">&amp;#xe64d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe64f;</span>
+                    <div class="name">fonts-del</div>
+                    <div class="code-name">&amp;#xe64f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe623;</span>
+                    <div class="name">triangle-r</div>
+                    <div class="code-name">&amp;#xe623;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe643;</span>
+                    <div class="name">radio</div>
+                    <div class="code-name">&amp;#xe643;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe639;</span>
+                    <div class="name">fonts-clear</div>
+                    <div class="code-name">&amp;#xe639;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe649;</span>
+                    <div class="name">align-left</div>
+                    <div class="code-name">&amp;#xe649;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe647;</span>
+                    <div class="name">align-center</div>
+                    <div class="code-name">&amp;#xe647;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe63e;</span>
+                    <div class="name">loading-1</div>
+                    <div class="code-name">&amp;#xe63e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe65c;</span>
+                    <div class="name">return</div>
+                    <div class="code-name">&amp;#xe65c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe648;</span>
+                    <div class="name">align-right</div>
+                    <div class="code-name">&amp;#xe648;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe62b;</span>
+                    <div class="name">fonts-strong</div>
+                    <div class="code-name">&amp;#xe62b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe67c;</span>
+                    <div class="name">upload</div>
+                    <div class="code-name">&amp;#xe67c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe63a;</span>
+                    <div class="name">dialogue</div>
+                    <div class="code-name">&amp;#xe63a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6fc;</span>
+                    <div class="name">headset</div>
+                    <div class="code-name">&amp;#xe6fc;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe63b;</span>
+                    <div class="name">cellphone-fine</div>
+                    <div class="code-name">&amp;#xe63b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6ed;</span>
+                    <div class="name">video</div>
+                    <div class="code-name">&amp;#xe6ed;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe654;</span>
+                    <div class="name">add-1</div>
+                    <div class="code-name">&amp;#xe654;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe650;</span>
+                    <div class="name">face-smile-b</div>
+                    <div class="code-name">&amp;#xe650;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe63c;</span>
+                    <div class="name">form</div>
+                    <div class="code-name">&amp;#xe63c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe65d;</span>
+                    <div class="name">camera-fill</div>
+                    <div class="code-name">&amp;#xe65d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe622;</span>
+                    <div class="name">screen-full</div>
+                    <div class="code-name">&amp;#xe622;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe657;</span>
+                    <div class="name">cart</div>
+                    <div class="code-name">&amp;#xe657;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe64b;</span>
+                    <div class="name">fonts-html</div>
+                    <div class="code-name">&amp;#xe64b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe756;</span>
+                    <div class="name">fire</div>
+                    <div class="code-name">&amp;#xe756;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe64e;</span>
+                    <div class="name">fonts-code</div>
+                    <div class="code-name">&amp;#xe64e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe716;</span>
+                    <div class="name">set</div>
+                    <div class="code-name">&amp;#xe716;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe625;</span>
+                    <div class="name">triangle-d</div>
+                    <div class="code-name">&amp;#xe625;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe62a;</span>
+                    <div class="name">tabs</div>
+                    <div class="code-name">&amp;#xe62a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe702;</span>
+                    <div class="name">tips</div>
+                    <div class="code-name">&amp;#xe702;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe64a;</span>
+                    <div class="name">picture</div>
+                    <div class="code-name">&amp;#xe64a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe66c;</span>
+                    <div class="name">flag</div>
+                    <div class="code-name">&amp;#xe66c;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe671;</span>
+                    <div class="name">more-vertical</div>
+                    <div class="code-name">&amp;#xe671;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe63d;</span>
+                    <div class="name">loading</div>
+                    <div class="code-name">&amp;#xe63d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe646;</span>
+                    <div class="name">fonts-u</div>
+                    <div class="code-name">&amp;#xe646;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe644;</span>
+                    <div class="name">fonts-i</div>
+                    <div class="code-name">&amp;#xe644;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe666;</span>
+                    <div class="name">refresh-1</div>
+                    <div class="code-name">&amp;#xe666;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe65e;</span>
+                    <div class="name">rmb</div>
+                    <div class="code-name">&amp;#xe65e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe68e;</span>
+                    <div class="name">home</div>
+                    <div class="code-name">&amp;#xe68e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe770;</span>
+                    <div class="name">user</div>
+                    <div class="code-name">&amp;#xe770;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe667;</span>
+                    <div class="name">notice</div>
+                    <div class="code-name">&amp;#xe667;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe688;</span>
+                    <div class="name">voice</div>
+                    <div class="code-name">&amp;#xe688;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe675;</span>
+                    <div class="name">login-weibo</div>
+                    <div class="code-name">&amp;#xe675;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe655;</span>
+                    <div class="name">file-b</div>
+                    <div class="code-name">&amp;#xe655;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6b1;</span>
+                    <div class="name">snowflake</div>
+                    <div class="code-name">&amp;#xe6b1;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe676;</span>
+                    <div class="name">login-qq</div>
+                    <div class="code-name">&amp;#xe676;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe681;</span>
+                    <div class="name">upload-drag</div>
+                    <div class="code-name">&amp;#xe681;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe672;</span>
+                    <div class="name">auz</div>
+                    <div class="code-name">&amp;#xe672;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe663;</span>
+                    <div class="name">template</div>
+                    <div class="code-name">&amp;#xe663;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe653;</span>
+                    <div class="name">app</div>
+                    <div class="code-name">&amp;#xe653;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe665;</span>
+                    <div class="name">console</div>
+                    <div class="code-name">&amp;#xe665;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe65a;</span>
+                    <div class="name">prev</div>
+                    <div class="code-name">&amp;#xe65a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe7ae;</span>
+                    <div class="name">website</div>
+                    <div class="code-name">&amp;#xe7ae;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe65b;</span>
+                    <div class="name">next</div>
+                    <div class="code-name">&amp;#xe65b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe65f;</span>
+                    <div class="name">more</div>
+                    <div class="code-name">&amp;#xe65f;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe857;</span>
+                    <div class="name">component</div>
+                    <div class="code-name">&amp;#xe857;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe668;</span>
+                    <div class="name">shrink-right</div>
+                    <div class="code-name">&amp;#xe668;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe677;</span>
+                    <div class="name">login-wechat</div>
+                    <div class="code-name">&amp;#xe677;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe66b;</span>
+                    <div class="name">spread-left</div>
+                    <div class="code-name">&amp;#xe66b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe669;</span>
+                    <div class="name">refresh</div>
+                    <div class="code-name">&amp;#xe669;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe660;</span>
+                    <div class="name">camera</div>
+                    <div class="code-name">&amp;#xe660;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe758;</span>
+                    <div class="name">screen-restore</div>
+                    <div class="code-name">&amp;#xe758;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe66e;</span>
+                    <div class="name">note</div>
+                    <div class="code-name">&amp;#xe66e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe662;</span>
+                    <div class="name">male</div>
+                    <div class="code-name">&amp;#xe662;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe661;</span>
+                    <div class="name">female</div>
+                    <div class="code-name">&amp;#xe661;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe673;</span>
+                    <div class="name">password</div>
+                    <div class="code-name">&amp;#xe673;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe66a;</span>
+                    <div class="name">theme</div>
+                    <div class="code-name">&amp;#xe66a;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6c6;</span>
+                    <div class="name">praise</div>
+                    <div class="code-name">&amp;#xe6c6;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe658;</span>
+                    <div class="name">star-fill</div>
+                    <div class="code-name">&amp;#xe658;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe674;</span>
+                    <div class="name">senior</div>
+                    <div class="code-name">&amp;#xe674;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6c5;</span>
+                    <div class="name">tread</div>
+                    <div class="code-name">&amp;#xe6c5;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe67b;</span>
+                    <div class="name">rate</div>
+                    <div class="code-name">&amp;#xe67b;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe678;</span>
+                    <div class="name">cellphone</div>
+                    <div class="code-name">&amp;#xe678;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe656;</span>
+                    <div class="name">template-1</div>
+                    <div class="code-name">&amp;#xe656;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe679;</span>
+                    <div class="name">vercode</div>
+                    <div class="code-name">&amp;#xe679;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe67e;</span>
+                    <div class="name">隐藏导航</div>
+                    <div class="code-name">&amp;#xe67e;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe67d;</span>
+                    <div class="name">export</div>
+                    <div class="code-name">&amp;#xe67d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe610;</span>
+                    <div class="name">cols</div>
+                    <div class="code-name">&amp;#xe610;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe66d;</span>
+                    <div class="name">print</div>
+                    <div class="code-name">&amp;#xe66d;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe714;</span>
+                    <div class="name">slider</div>
+                    <div class="code-name">&amp;#xe714;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe7c2;</span>
+                    <div class="name">隐藏</div>
+                    <div class="code-name">&amp;#xe7c2;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e3;</span>
+                    <div class="name">caozuo</div>
+                    <div class="code-name">&amp;#xe6e3;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e4;</span>
+                    <div class="name">erweima</div>
+                    <div class="code-name">&amp;#xe6e4;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e5;</span>
+                    <div class="name">lock1</div>
+                    <div class="code-name">&amp;#xe6e5;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e6;</span>
+                    <div class="name">loginout</div>
+                    <div class="code-name">&amp;#xe6e6;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e7;</span>
+                    <div class="name">menu1</div>
+                    <div class="code-name">&amp;#xe6e7;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e8;</span>
+                    <div class="name">x</div>
+                    <div class="code-name">&amp;#xe6e8;</div>
+                </li>
+
+                <li class="dib">
+                    <span class="icon iconfont">&#xe6e9;</span>
+                    <div class="name">zhanghu</div>
+                    <div class="code-name">&amp;#xe6e9;</div>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/productjs/base/sysmodule.js"></script>
